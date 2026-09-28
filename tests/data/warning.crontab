@@ -1,0 +1,2 @@
+MAILTO = root
+0 5 * * * /bin/date +%Y >/dev/null
