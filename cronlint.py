@@ -293,7 +293,11 @@ def collect_targets(paths):
     targets = []
     for path in paths:
         if os.path.isdir(path):
-            for name in sorted(os.listdir(path)):
+            try:
+                entries = sorted(os.listdir(path))
+            except OSError:
+                continue
+            for name in entries:
                 full = os.path.join(path, name)
                 if os.path.isfile(full):
                     targets.append(full)
