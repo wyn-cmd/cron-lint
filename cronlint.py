@@ -17,13 +17,14 @@ DOW_NAMES = {
     "sun": 0, "mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5, "sat": 6,
 }
 
-FIELD_SPECS = [
+# Field names and their allowed ranges.
+FIELD_SPECS = (
     ("minute", 0, 59, {}),
     ("hour", 0, 23, {}),
     ("day of month", 1, 31, {}),
     ("month", 1, 12, MONTH_NAMES),
     ("day of week", 0, 7, DOW_NAMES),
-]
+)
 
 MACROS = {
     "@reboot", "@yearly", "@annually", "@monthly",
