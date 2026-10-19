@@ -185,7 +185,9 @@ def check_command(command, line_no, findings):
     if not command.strip():
         findings.append(Finding("error", "empty-command", line_no, "this schedule has no command to run"))
         return
-    if "%" in command and "\\%" not in command:
+    # match any percent whose preceding character is not a backslash, so a line
+    # that escapes one percent and forgets another is still reported
+    if re.search(r"(?<!\\)%", command):
         findings.append(Finding("warning", "unescaped-percent", line_no,
                                 "an unescaped percent sign becomes a newline in cron, the rest of the line is fed to stdin, escape it as \\%"))
     if ">" not in command:

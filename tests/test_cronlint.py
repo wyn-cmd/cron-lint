@@ -96,6 +96,14 @@ class LintTests(unittest.TestCase):
         findings = self.lint("0 5 * * * /bin/date +%Y >/dev/null\n")
         self.assertIn("unescaped-percent", codes(findings, "warning"))
 
+    def test_escaped_percent_hides_an_unescaped_one(self):
+        findings = self.lint("0 5 * * * /bin/date +\\%Y%d >/dev/null\n")
+        self.assertIn("unescaped-percent", codes(findings, "warning"))
+
+    def test_fully_escaped_percent_is_quiet(self):
+        findings = self.lint("0 5 * * * /bin/date +\\%Y\\%d >/dev/null\n")
+        self.assertNotIn("unescaped-percent", codes(findings))
+
     def test_missing_final_newline(self):
         findings = self.lint("0 5 * * * /bin/true >/dev/null 2>&1")
         self.assertIn("no-final-newline", codes(findings, "warning"))
